@@ -1,6 +1,8 @@
 package test;
 
 import org.junit.Test;
+
+import utils.OSUtils;
 import utils.WindowsInfoUtil;
 
 
@@ -23,6 +25,33 @@ public class TestDemo{
 	
 	@Test
 	public void OSUtilsTest(){
-
+        try {
+            // System信息，从jvm获取
+            OSUtils.property();
+            System.out.println("----------------------------------");
+            // cpu信息
+            OSUtils.cpu();
+            System.out.println("----------------------------------");
+            // 内存信息
+            OSUtils.memory();
+            System.out.println("----------------------------------");
+            // 操作系统信息
+            OSUtils.os();
+            System.out.println("----------------------------------");
+            // 用户信息
+            OSUtils.who();
+            System.out.println("----------------------------------");
+            // 文件系统信息
+            OSUtils.file();
+            System.out.println("----------------------------------");
+            // 网络信息
+            OSUtils.net();
+            System.out.println("----------------------------------");
+            // 以太网信息
+            OSUtils.ethernet();
+            System.out.println("----------------------------------");
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
 	}
 }
