@@ -2,8 +2,11 @@ package utils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import org.hyperic.sigar.CpuInfo;
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.FileSystem;
@@ -19,38 +22,6 @@ import org.hyperic.sigar.Swap;
 import org.hyperic.sigar.Who;
 
 public class OSUtils {
-
-
-//    public static void main(String[] args) {
-//        try {
-//            // System信息，从jvm获取
-//            property();
-//            System.out.println("----------------------------------");
-//            // cpu信息
-//            cpu();
-//            System.out.println("----------------------------------");
-//            // 内存信息
-//            memory();
-//            System.out.println("----------------------------------");
-//            // 操作系统信息
-//            os();
-//            System.out.println("----------------------------------");
-//            // 用户信息
-//            who();
-//            System.out.println("----------------------------------");
-//            // 文件系统信息
-//            file();
-//            System.out.println("----------------------------------");
-//            // 网络信息
-//            net();
-//            System.out.println("----------------------------------");
-//            // 以太网信息
-//            ethernet();
-//            System.out.println("----------------------------------");
-//        } catch (Exception e1) {
-//            e1.printStackTrace();
-//        }
-//    }
 
      public static void property() throws UnknownHostException {
             Runtime r = Runtime.getRuntime();
@@ -141,6 +112,24 @@ public class OSUtils {
             System.out.println("CPU当前空闲率:    " + CpuPerc.format(cpu.getIdle()));// 当前空闲率
             System.out.println("CPU总的使用率:    " + CpuPerc.format(cpu.getCombined()));// 总的使用率
         }
+     
+     public static double[][] getCpuPercList() throws SigarException{
+    	 Sigar sigar = new Sigar();
+    	 CpuPerc cpuList[] = null;
+         cpuList = sigar.getCpuPercList();
+
+         double[][] list = new double[cpuList.length][6];
+         for(int i=0;i<cpuList.length;i++){
+        	 list[i][0]=cpuList[i].getUser();
+        	 list[i][1]=cpuList[i].getSys();
+        	 list[i][2]=cpuList[i].getWait();
+        	 list[i][3]=cpuList[i].getNice();
+        	 list[i][4]=cpuList[i].getIdle();
+        	 list[i][5]=cpuList[i].getCombined();
+         }
+         
+         return list;
+     }
 
      public static void os() {
             OperatingSystem OS = OperatingSystem.getInstance();

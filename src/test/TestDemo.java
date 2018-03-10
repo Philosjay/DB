@@ -1,7 +1,12 @@
 package test;
 
+import infomanagers.CpuInfo;
+
+import java.util.List;
+
 import org.junit.Test;
 
+import services.CpuInfoService;
 import utils.OSUtils;
 import utils.WindowsInfoUtil;
 
@@ -27,31 +32,43 @@ public class TestDemo{
 	public void OSUtilsTest(){
         try {
             // System信息，从jvm获取
-            OSUtils.property();
+//            OSUtils.property();
             System.out.println("----------------------------------");
             // cpu信息
-            OSUtils.cpu();
+           OSUtils.cpu();
             System.out.println("----------------------------------");
             // 内存信息
-            OSUtils.memory();
+//            OSUtils.memory();
             System.out.println("----------------------------------");
             // 操作系统信息
-            OSUtils.os();
+//            OSUtils.os();
             System.out.println("----------------------------------");
             // 用户信息
-            OSUtils.who();
+//            OSUtils.who();
             System.out.println("----------------------------------");
             // 文件系统信息
             OSUtils.file();
-            System.out.println("----------------------------------");
+///*            System.out.println("----------------------------------");
             // 网络信息
             OSUtils.net();
             System.out.println("----------------------------------");
             // 以太网信息
             OSUtils.ethernet();
-            System.out.println("----------------------------------");
+//*/             System.out.println("----------------------------------");
+        	
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+	}
+	
+	@Test
+	public void cpuServiceTest(){
+		
+		CpuInfoService ser = new CpuInfoService();
+		CpuInfo[] list =  ser.loadCpuList();
+		for(int i=0;i<list.length;i++){
+			System.out.println(list[i]);
+		}
+		
 	}
 }

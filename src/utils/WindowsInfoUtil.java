@@ -166,11 +166,4 @@ public class WindowsInfoUtil {
 			return tgt;
 		}
 	}
-//	public static void main(String[] args) throws Exception {
-//
-//		System.out.println("cpu占有率=" + WindowsInfoUtil.getCpuRatioForWindows());
-//		System.out.println("可使用内存=" + WindowsInfoUtil.getMemery());
-//		System.out.println("各盘占用情况：" + WindowsInfoUtil.getDisk());
-//		
-//	}
 }
