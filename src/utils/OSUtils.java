@@ -3,6 +3,7 @@ package utils;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -113,19 +114,22 @@ public class OSUtils {
             System.out.println("CPU总的使用率:    " + CpuPerc.format(cpu.getCombined()));// 总的使用率
         }
      
-     public static double[][] getCpuPercList() throws SigarException{
+     public static  List<HashMap<String, Object>> getCpuPercMapList() throws SigarException{
     	 Sigar sigar = new Sigar();
     	 CpuPerc cpuList[] = null;
          cpuList = sigar.getCpuPercList();
 
-         double[][] list = new double[cpuList.length][6];
+         List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
          for(int i=0;i<cpuList.length;i++){
-        	 list[i][0]=cpuList[i].getUser();
-        	 list[i][1]=cpuList[i].getSys();
-        	 list[i][2]=cpuList[i].getWait();
-        	 list[i][3]=cpuList[i].getNice();
-        	 list[i][4]=cpuList[i].getIdle();
-        	 list[i][5]=cpuList[i].getCombined();
+        	 HashMap<String, Object> tmp = new HashMap<String, Object>();
+        	 tmp.put("object", "cup"+ i);
+        	 tmp.put("userUseRate", cpuList[i].getUser());
+        	 tmp.put("sysUseRate",cpuList[i].getSys());
+        	 tmp.put("waitRate",cpuList[i].getWait());
+        	 tmp.put("errorRate",cpuList[i].getNice());
+        	 tmp.put("idleRate",cpuList[i].getIdle());
+        	 tmp.put("totalUseRate",cpuList[i].getCombined());
+        	 list.add(tmp);
          }
          
          return list;
