@@ -7,14 +7,11 @@ import org.hyperic.sigar.SigarException;
 
 import utils.OSUtils;
 
-
-
-public class CpuInfoService extends InfoService{
-	
+public class DiskInfoService extends InfoService {
 	public List<HashMap<String, Object>> getInfoHashList(){
 		List<HashMap<String, Object>> list = null;
 		try {
-			list = OSUtils.getCpuPercMapList();
+			list = OSUtils.getDiskMapList();
 		} catch (SigarException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -22,8 +19,5 @@ public class CpuInfoService extends InfoService{
 		
 		return list;
 	}
-	
-	public void saveInfo(HashMap<String, Object> cpuInfo){
-		
-	}
+
 }

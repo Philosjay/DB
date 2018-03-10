@@ -1,11 +1,13 @@
 package test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test;
 
 import services.CpuInfoService;
+import services.DiskInfoService;
 import utils.OSUtils;
 import utils.WindowsInfoUtil;
 
@@ -22,36 +24,36 @@ public class TestDemo{
 	public void WinUtilTest(){
 
 		
-		System.out.println("cpuÕ¼ÓĞÂÊ=" + WindowsInfoUtil.getCpuRatioForWindows());
-		System.out.println("¿ÉÊ¹ÓÃÄÚ´æ=" + WindowsInfoUtil.getMemery());
-		System.out.println("¸÷ÅÌÕ¼ÓÃÇé¿ö£º" + WindowsInfoUtil.getDisk());
+		System.out.println("cpuå æœ‰ç‡=" + WindowsInfoUtil.getCpuRatioForWindows());
+		System.out.println("å¯ä½¿ç”¨å†…å­˜=" + WindowsInfoUtil.getMemery());
+		System.out.println("å„ç›˜å ç”¨æƒ…å†µï¼š" + WindowsInfoUtil.getDisk());
 	}
 	
 	@Test
 	public void OSUtilsTest(){
         try {
-//            // SystemĞÅÏ¢£¬´Ójvm»ñÈ¡
+//            // Systemä¿¡æ¯ï¼Œä»jvmè·å–
 ////            OSUtils.property();
 //            System.out.println("----------------------------------");
-//            // cpuĞÅÏ¢
+//            // cpuä¿¡æ¯
 //           OSUtils.cpu();
 //            System.out.println("----------------------------------");
-//            // ÄÚ´æĞÅÏ¢
+//            // å†…å­˜ä¿¡æ¯
 ////            OSUtils.memory();
 //            System.out.println("----------------------------------");
-//            // ²Ù×÷ÏµÍ³ĞÅÏ¢
+//            // æ“ä½œç³»ç»Ÿä¿¡æ¯
 ////            OSUtils.os();
 //            System.out.println("----------------------------------");
-//            // ÓÃ»§ĞÅÏ¢
+//            // ç”¨æˆ·ä¿¡æ¯
 ////            OSUtils.who();
 //            System.out.println("----------------------------------");
-//            // ÎÄ¼şÏµÍ³ĞÅÏ¢
-//            OSUtils.file();
+//            // æ–‡ä»¶ç³»ç»Ÿä¿¡æ¯
+            OSUtils.file();
 /////*            System.out.println("----------------------------------");
-//            // ÍøÂçĞÅÏ¢
+//            // ç½‘ç»œä¿¡æ¯
 //            OSUtils.net();
 //            System.out.println("----------------------------------");
-//            // ÒÔÌ«ÍøĞÅÏ¢
+//            // ä»¥å¤ªç½‘ä¿¡æ¯
 //            OSUtils.ethernet();
 ////*/             System.out.println("----------------------------------");
         	
@@ -68,7 +70,29 @@ public class TestDemo{
 	
 	@Test
 	public void cpuServiceTest(){
+		CpuInfoService ser = new CpuInfoService();
+		List<HashMap<String,Object>> list = ser.getInfoHashList();
+		for(int i=0; i<list.size();i++){
+			System.out.println(list.get(i));
+		}
 		
 		
+	}
+	
+	@Test
+	public void diskServiceTest(){
+		DiskInfoService ser = new DiskInfoService();
+		List<HashMap<String,Object>> list = ser.getInfoHashList();
+		for(int i=0; i<list.size();i++){
+			System.out.println(list.get(i));
+		}
+	}
+	
+	
+	@Test
+	public void dbTest(){
+		DiskInfoService ser = new DiskInfoService();
+		ser.addInfo(null);
+
 	}
 }

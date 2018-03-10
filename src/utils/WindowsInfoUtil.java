@@ -8,7 +8,7 @@
  * @author HuangHaifeng 1.0
  * @date   2016-1-12
  * @copyright CCompass
- *     Ôö¼ÓÓÃÓÚ¼à¿ØÏµÍ³cpu,memoryµÄ¹¤¾ßÀà
+ *     å¢åŠ ç”¨äºç›‘æ§ç³»ç»Ÿcpu,memoryçš„å·¥å…·ç±»
  */
 package utils;
 
@@ -28,11 +28,11 @@ public class WindowsInfoUtil {
 	private static final int PERCENT = 100;
 	private static final int FAULTLENGTH = 10;
 
-	// »ñÈ¡ÄÚ´æÊ¹ÓÃÂÊ
+	// è·å–å†…å­˜ä½¿ç”¨ç‡
 	public static String getMemery() {
 
 		OperatingSystemMXBean osmxb = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
-		long totalvirtualMemory = osmxb.getTotalSwapSpaceSize(); // Ê£ÓàµÄÎïÀíÄÚ´æ
+		long totalvirtualMemory = osmxb.getTotalSwapSpaceSize(); // å‰©ä½™çš„ç‰©ç†å†…å­˜
 		long freePhysicalMemorySize = osmxb.getFreePhysicalMemorySize();
 		Double compare = (Double) (1 - freePhysicalMemorySize * 1.0 / totalvirtualMemory) * 100;
 
@@ -41,10 +41,10 @@ public class WindowsInfoUtil {
 
 	}
 
-	// »ñÈ¡ÎÄ¼şÏµÍ³Ê¹ÓÃÂÊ
+	// è·å–æ–‡ä»¶ç³»ç»Ÿä½¿ç”¨ç‡
 	public static List<String> getDisk() {
 
-		// ²Ù×÷ÏµÍ³
+		// æ“ä½œç³»ç»Ÿ
 		List<String> list = new ArrayList<String>();
 
 		for (char c = 'A'; c <= 'Z'; c++) {
@@ -54,7 +54,7 @@ public class WindowsInfoUtil {
 				long total = (long) win.getTotalSpace();
 				long free = (long) win.getFreeSpace();
 				Double compare = (Double) (1 - free * 1.0 / total) * 100;
-				String str = c + ":ÅÌÒÑÊ¹ÓÃ" + compare.intValue() + "%";
+				String str = c + ":ç›˜å·²ä½¿ç”¨" + compare.intValue() + "%";
 				list.add(str);
 			}
 		}
@@ -62,13 +62,13 @@ public class WindowsInfoUtil {
 
 	}
 
-	// »ñµÃcpuÊ¹ÓÃÂÊ
+	// è·å¾—cpuä½¿ç”¨ç‡
 	public static String getCpuRatioForWindows() {
 
 		try {
 			String procCmd = System.getenv("windir")
 					+ "\\system32\\wbem\\wmic.exe process get Caption,CommandLine,KernelModeTime,ReadOperationCount,ThreadCount,UserModeTime,WriteOperationCount";
-			// È¡½ø³ÌĞÅÏ¢
+			// å–è¿›ç¨‹ä¿¡æ¯
 			long[] c0 = readCpu(Runtime.getRuntime().exec(procCmd));
 			Thread.sleep(CPUTIME);
 			long[] c1 = readCpu(Runtime.getRuntime().exec(procCmd));
@@ -114,7 +114,7 @@ public class WindowsInfoUtil {
 					continue;
 
 				}
-               // ×Ö¶Î³öÏÖË³Ğò£ºCaption,CommandLine,KernelModeTime,ReadOperationCount,
+               // å­—æ®µå‡ºç°é¡ºåºï¼šCaption,CommandLine,KernelModeTime,ReadOperationCount,
 				          //ThreadCount,UserModeTime,WriteOperation
 				String caption = Bytes.substring(line, capidx, cmdidx - 1).trim();
 				String cmd = Bytes.substring(line, cmdidx, kmtidx - 1).trim();
