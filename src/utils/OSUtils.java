@@ -258,7 +258,8 @@ public class OSUtils {
                  FileSystem fs = fslist[i];
                  
                  // 分区的盘符名称
-                 map.put("name", fs.getDevName());
+                 String[] name = fs.getDevName().split(":");
+                 map.put("name", "disk_" + name[0]);
                  FileSystemUsage usage = null;
                  usage = sigar.getFileSystemUsage(fs.getDirName());
                  switch (fs.getType()) {

@@ -86,7 +86,11 @@ public class TestDemo{
 	public void diskServiceTest(){
 		DiskInfoService ser = new DiskInfoService();
 		List<HashMap<String,Object>> list = ser.getInfoHashList();
-		ser.fllterInfoThenAddInfo(list);
+		List<HashMap<String,Object>> list2 = ser.fllterInfoThenAddInfo(list);
+		
+		for(int i=0;i<list2.size();i++){
+			ser.addInfo(list2.get(i));
+		}
 	}
 	
 	
