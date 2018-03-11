@@ -16,7 +16,7 @@ public class JdbcUtils {
 					.getResourceAsStream("dbconfig.properties");
 			props = new Properties();
 			props.load(in);
-			System.out.println(props);
+//			System.out.println(props);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e1);
@@ -24,8 +24,8 @@ public class JdbcUtils {
 			
 		try {
 			String className = props.getProperty("driverClassName");
-	//		String className = "com.mysql.jdbc.Driver";
-			System.out.println(className);
+//			String className = "com.mysql.jdbc.Driver";
+//			System.out.println(className);
 			Class.forName(className);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

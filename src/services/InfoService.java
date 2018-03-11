@@ -1,52 +1,55 @@
 package services;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import utils.JdbcUtils;
+import dao.InfoDao;
+
 
 
 public class InfoService {
-	Connection con=null;
-	PreparedStatement pstm = null;
-	ResultSet rs =null;
+
 	
 	public List<HashMap<String, Object>> getInfoHashList(){
 		//Do nothing by default
 		return null;
 	}
 	
+	public List<HashMap<String, Object>> fllterInfoThenAddInfo(List<HashMap<String, Object>> list){
+		// 把采集到的所有信息根据经过筛选，保留部分
+
+		
+		return list;
+	}
+	
 	public void addInfo(HashMap<String, Object> cpuInfo){
-		try {
-			con = JdbcUtils.getConnection();
+		String objectName = cpuInfo.get("name").toString();
+		String tableName = "tb_" + objectName;
+		
+		InfoDao dao = new InfoDao();
+		
+		// 一个数据对象对应一张table，如果表不存在添加新table
+		if(!dao.isTableExist("tb_" + objectName))	dao.createTable("tb_" + objectName);
+		
+		
+		//更新table 的列
+		//遍历HashMap，获得列名称
+		Iterator iter = cpuInfo.entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry entry = (Map.Entry)iter.next();
+			Object key = entry.getKey();
 			
-			//完善sql模板
-			String sql = "insert into tb_stu3 (username,password) values";
-			
-			pstm = con.prepareStatement(sql);
-			
-			pstm.setString(1, "Zelda");
-			pstm.setString(2, "666");
-			
-			pstm.executeUpdate();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException(e);
-		}
-		finally{
-			try {
-				if(pstm!=null)pstm.close();
-				if(con!=null)con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				throw new RuntimeException(e);
+			if(!dao.isColExist(key.toString(), tableName)){
+				dao.addColumn(key.toString(),tableName);
 			}
 			
 		}
+		
+		
+		
+		dao.addInfo(cpuInfo,tableName);
 	}
 
 }

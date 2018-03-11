@@ -2,6 +2,7 @@ package utils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -122,13 +123,16 @@ public class OSUtils {
          List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
          for(int i=0;i<cpuList.length;i++){
         	 HashMap<String, Object> tmp = new HashMap<String, Object>();
-        	 tmp.put("name", "cup"+ i);
+        	 int num = i + 1;
+        	 tmp.put("name", "cpu" + num);
         	 tmp.put("userUseRate", cpuList[i].getUser());
         	 tmp.put("sysUseRate",cpuList[i].getSys());
         	 tmp.put("waitRate",cpuList[i].getWait());
         	 tmp.put("errorRate",cpuList[i].getNice());
         	 tmp.put("idleRate",cpuList[i].getIdle());
         	 tmp.put("totalUseRate",cpuList[i].getCombined());
+        	 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
+        	 tmp.put("time",df.format(System.currentTimeMillis())); 
         	 list.add(tmp);
          }
          
@@ -329,4 +333,4 @@ public class OSUtils {
                 System.out.println(cfg.getName() + "网卡类型" + cfg.getType());//
             }
         }
-}}
+}
