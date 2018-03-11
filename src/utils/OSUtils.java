@@ -131,8 +131,18 @@ public class OSUtils {
         	 tmp.put("errorRate",cpuList[i].getNice());
         	 tmp.put("idleRate",cpuList[i].getIdle());
         	 tmp.put("totalUseRate",cpuList[i].getCombined());
-        	 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
-        	 tmp.put("time",df.format(System.currentTimeMillis())); 
+        	 
+        	 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+/*        	 String[] time = df.format(System.currentTimeMillis()).split("-");
+        	 tmp.put("year", time[0]);
+        	 tmp.put("month", time[1]);
+        	 tmp.put("date", time[2]);
+        	 tmp.put("hour", time[3]);
+        	 tmp.put("minute", time[4]);
+        	 tmp.put("second", time[5]);*/
+        	 
+        	 tmp.put("time", df.format(System.currentTimeMillis()));
+        	 
         	 list.add(tmp);
          }
          

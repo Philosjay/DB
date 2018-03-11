@@ -83,7 +83,8 @@ public class InfoDao {
 		}
 		finally{
 			try {
-				if(pstm!=null)pstm.close();
+				if(rs!=null) rs.close();
+				if(stm!=null)stm.close();
 				if(con!=null)con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -127,8 +128,9 @@ public class InfoDao {
 		try{
 			con = JdbcUtils.getConnection();
 			String sql = "CREATE table " + name;
-			sql += "(" + "id char(11),"
-					+	"name varchar(50)"
+			sql += "(" + "id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,"
+					+	"name varchar(50),"
+					+ 	"time TIMESTAMP  "
 					+ ")";
 			stm = con.createStatement();		
 			stm.executeUpdate(sql);
@@ -138,6 +140,7 @@ public class InfoDao {
 		}
 		finally{
 			try {
+				if(rs!=null) rs.close();
 				if(stm!=null)stm.close();
 				if(con!=null)con.close();
 			} catch (SQLException e) {
@@ -176,6 +179,7 @@ public class InfoDao {
 		}
 		finally{
 			try {
+				if(rs!=null) rs.close();
 				if(stm!=null)stm.close();
 				if(con!=null)con.close();
 			} catch (SQLException e) {
@@ -192,7 +196,7 @@ public class InfoDao {
 			con = JdbcUtils.getConnection();				
 			stm = con.createStatement();
 			
-			String sql = "ALTER TABLE `" + tableName +"` ADD column " + colName + " varchar(30)";
+			String sql = "ALTER TABLE `" + tableName +"` ADD column " + colName + " double";
 			stm.executeUpdate(sql);
 			
 		}catch(Exception e){
