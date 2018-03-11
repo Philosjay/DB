@@ -8,6 +8,8 @@ import org.hyperic.sigar.SigarException;
 import utils.OSUtils;
 
 public class DiskInfoService extends InfoService {
+	
+	@Override
 	public List<HashMap<String, Object>> getInfoHashList(){
 		List<HashMap<String, Object>> list = null;
 		try {

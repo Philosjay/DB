@@ -10,25 +10,14 @@ import dao.InfoDao;
 
 
 public class InfoService {
-
 	
-	public List<HashMap<String, Object>> getInfoHashList(){
-		//Do nothing by default
-		return null;
-	}
+	InfoDao dao = new InfoDao();
 	
-	public List<HashMap<String, Object>> fllterInfoThenAddInfo(List<HashMap<String, Object>> list){
-		// 把采集到的所有信息根据经过筛选，保留部分
-
-		
-		return list;
-	}
-	
-	public void addInfo(HashMap<String, Object> cpuInfo){
-		String objectName = cpuInfo.get("name").toString();
+	public void initTable(HashMap<String, Object> info){
+		String objectName = info.get("name").toString();
 		String tableName = "tb_" + objectName;
 		
-		InfoDao dao = new InfoDao();
+		
 		
 		// 一个数据对象对应一张table，如果表不存在添加新table
 		if(!dao.isTableExist("tb_" + objectName))	dao.createTable("tb_" + objectName);
@@ -36,7 +25,7 @@ public class InfoService {
 		
 		//更新table 的列
 		//遍历HashMap，获得列名称
-		Iterator iter = cpuInfo.entrySet().iterator();
+		Iterator iter = info.entrySet().iterator();
 		while (iter.hasNext()) {
 			Map.Entry entry = (Map.Entry)iter.next();
 			Object key = entry.getKey();
@@ -46,10 +35,39 @@ public class InfoService {
 			}
 			
 		}
-		
-		
-		
-		dao.addInfo(cpuInfo,tableName);
 	}
+	
+	public void executeBatch(){
+		dao.executeBatch();
+	}
+	
+	public void prepareBatch(HashMap<String, Object> info){
+		String objectName = info.get("name").toString();
+		String tableName = "tb_" + objectName;
+			
+		dao.prepareBatch(info,tableName);
+	}
+
+	
+	public List<HashMap<String, Object>> getInfoHashList(){
+		//Do nothing by default
+		return null;
+	}
+	
+	public List<HashMap<String, Object>> fllterInfo(List<HashMap<String, Object>> list){
+		// 把采集到的所有信息根据经过筛选，保留部分
+
+		
+		return list;
+	}
+	
+	public void addInfoToBatch(HashMap<String, Object> info){
+		String objectName = info.get("name").toString();
+		String tableName = "tb_" + objectName;
+		
+		dao.addInfoToBatch(info,tableName);
+	}
+	
+	
 
 }

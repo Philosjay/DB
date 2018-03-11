@@ -18,23 +18,17 @@ public class InfoDao {
 	Statement stm = null;
 	ResultSet rs =null;
 	
+	String sql_cols ;
+	String sql_values ;
 	
-	public void addInfo(HashMap<String, Object> info,String tableName){
-		
-		//获取数据库连接
-		try {
-			con = JdbcUtils.getConnection();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void prepareBatch(HashMap<String, Object> info,String tableName){
 		
 		//插入信息
 		try {			
 			//完善sql模板
 
-			String sql_cols = "insert into " + tableName  + "(";
-			String sql_values = "values (";
+			sql_cols = "insert into " + tableName  + "(";
+			sql_values = "values (";
 			for(int i=0; i< info.size(); i++){
 				sql_values += "?";
 				if(i<info.size()-1){
@@ -56,11 +50,21 @@ public class InfoDao {
 				i++;
 			}
 			
-			pstm = con.prepareStatement(sql_cols + sql_values);
-
+			pstm = con.prepareStatement(sql_cols + sql_values);	
 			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void addInfoToBatch(HashMap<String, Object> info,String tableName){
+		
+		//插入信息
+		try {			
+
 			//遍历HashMap，获得列名称
-			i =1;
+			int i =1;
 			Iterator iter = info.entrySet().iterator();
 			while (iter.hasNext()) {
 				Map.Entry entry = (Map.Entry)iter.next();
@@ -72,20 +76,27 @@ public class InfoDao {
 			
 			
 			
-//			pstm.addBatch(arg0);
+			pstm.addBatch();
 
-			
-			pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			
 			throw new RuntimeException(e);
+		}
+	}
+	
+	public void executeBatch(){
+		try {
+			System.out.println(pstm.toString());
+			pstm.executeBatch();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		finally{
 			try {
 				if(rs!=null) rs.close();
-				if(stm!=null)stm.close();
-				if(con!=null)con.close();
+				if(pstm!=null)	pstm.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				throw new RuntimeException(e);
@@ -93,6 +104,7 @@ public class InfoDao {
 			
 		}
 	}
+	
 	
 	public boolean isTableExist(String tableName) {
 		// TODO Auto-generated method stub
@@ -114,8 +126,8 @@ public class InfoDao {
 		}
 		finally{
 			try {
+				if(rs!=null) rs.close();
 				if(stm!=null)stm.close();
-				if(con!=null)con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				throw new RuntimeException(e);
@@ -126,7 +138,6 @@ public class InfoDao {
 	
 	public void createTable(String name){
 		try{
-			con = JdbcUtils.getConnection();
 			String sql = "CREATE table " + name;
 			sql += "(" + "id INT UNSIGNED  PRIMARY KEY AUTO_INCREMENT,"
 					+	"name varchar(50),"
@@ -142,7 +153,6 @@ public class InfoDao {
 			try {
 				if(rs!=null) rs.close();
 				if(stm!=null)stm.close();
-				if(con!=null)con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				throw new RuntimeException(e);
@@ -154,9 +164,6 @@ public class InfoDao {
 	
 	public boolean isColExist(String colName,String tableName){
 		try{		
-			con = JdbcUtils.getConnection();
-			
-			
 			
 			stm = con.createStatement();
 			
@@ -181,7 +188,6 @@ public class InfoDao {
 			try {
 				if(rs!=null) rs.close();
 				if(stm!=null)stm.close();
-				if(con!=null)con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				throw new RuntimeException(e);
@@ -192,8 +198,7 @@ public class InfoDao {
 	
 	public void addColumn(String colName,String tableName){
 		
-		try{		
-			con = JdbcUtils.getConnection();				
+		try{						
 			stm = con.createStatement();
 			
 			String sql = "ALTER TABLE `" + tableName +"` ADD column " + colName + " double";
@@ -204,8 +209,8 @@ public class InfoDao {
 		}
 		finally{
 			try {
+				if(rs!=null) rs.close();
 				if(stm!=null)stm.close();
-				if(con!=null)con.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				throw new RuntimeException(e);

@@ -11,6 +11,7 @@ import utils.OSUtils;
 
 public class CpuInfoService extends InfoService{
 	
+	@Override
 	public List<HashMap<String, Object>> getInfoHashList(){
 		List<HashMap<String, Object>> list = null;
 		try {
@@ -23,7 +24,4 @@ public class CpuInfoService extends InfoService{
 		return list;
 	}
 	
-	public void saveInfo(HashMap<String, Object> cpuInfo){
-		
-	}
 }

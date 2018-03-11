@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import app.Application;
 import services.CpuInfoService;
 import services.DiskInfoService;
 import utils.OSUtils;
@@ -72,7 +73,7 @@ public class TestDemo{
 	public void cpuServiceTest(){
 		CpuInfoService ser = new CpuInfoService();
 		List<HashMap<String,Object>> list = ser.getInfoHashList();
-		List<HashMap<String,Object>> list2 = ser.fllterInfoThenAddInfo(list);
+		List<HashMap<String,Object>> list2 = ser.fllterInfo(list);
 		
 		for(int i=0;i<list2.size();i++){
 			ser.addInfo(list2.get(i));
@@ -86,7 +87,7 @@ public class TestDemo{
 	public void diskServiceTest(){
 		DiskInfoService ser = new DiskInfoService();
 		List<HashMap<String,Object>> list = ser.getInfoHashList();
-		List<HashMap<String,Object>> list2 = ser.fllterInfoThenAddInfo(list);
+		List<HashMap<String,Object>> list2 = ser.fllterInfo(list);
 		
 		for(int i=0;i<list2.size();i++){
 			ser.addInfo(list2.get(i));
@@ -99,5 +100,11 @@ public class TestDemo{
 		DiskInfoService ser = new DiskInfoService();
 		ser.addInfo(null);
 
+	}
+	
+	@Test
+	public void appTest(){
+		Application app = new Application();
+		app.main();
 	}
 }
